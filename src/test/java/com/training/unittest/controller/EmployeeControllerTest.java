@@ -122,7 +122,7 @@ public class EmployeeControllerTest {
         employee.setEmail("m.javad2007@gmail.com");
         given(employeeService.updateEmployee(any(Employee.class))).willAnswer(invocation -> invocation.getArgument(0 ));
 
-        ResultActions response = mockMvc.perform(post("/api/employee/{id}", employee.getId())
+        ResultActions response = mockMvc.perform(put("/api/employee/{id}", employee.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(employee)));
 
