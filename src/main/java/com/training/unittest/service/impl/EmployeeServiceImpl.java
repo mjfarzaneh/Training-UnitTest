@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             //return new ResponseDto(HttpStatus.FORBIDDEN, new EmployeeExceptions("Employee already exists with given email: " + employee.getEmail()).getMessage(), null);
         }
         //return new ResponseDto(HttpStatus.CREATED, null, employeeRepo.save(employee));
-        return byEmail.get();
+        return employeeRepo.save(employee);
     }
 
     @Override
@@ -33,11 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Optional<Employee> getEmployeeById(Long id) {
-        Optional<Employee> byId = employeeRepo.findById(id);
-        if (byId.isEmpty()) {
-            throw new EmployeeExceptions("User: " + id + " does not exist");
-        }
-        return byId;
+        return employeeRepo.findById(id);
+
     }
 
     @Override
