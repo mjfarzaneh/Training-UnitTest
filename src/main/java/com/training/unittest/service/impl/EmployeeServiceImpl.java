@@ -20,8 +20,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> byEmail = employeeRepo.findByEmail(employee.getEmail());
         if (byEmail.isPresent()) {
             throw new EmployeeExceptions("Employee already exists with given email: " + employee.getEmail());
+            //return new ResponseDto(HttpStatus.FORBIDDEN, new EmployeeExceptions("Employee already exists with given email: " + employee.getEmail()).getMessage(), null);
         }
-        return employeeRepo.save(employee);
+        //return new ResponseDto(HttpStatus.CREATED, null, employeeRepo.save(employee));
+        return byEmail.get();
     }
 
     @Override
