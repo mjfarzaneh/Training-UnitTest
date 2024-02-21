@@ -7,15 +7,12 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,9 +99,10 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.lastName", CoreMatchers.is(employee.getLastName())))
                 .andExpect(jsonPath("$.email", CoreMatchers.is(employee.getEmail())));
     }
+
     @DisplayName("getEmployeeById RestAPI(negative scenario)")
     @Test
-    public void givenEmployeeId_whenGetEmployeeById_then () throws Exception {
+    public void givenEmployeeId_whenGetEmployeeById_then() throws Exception {
         given(employeeService.getEmployeeById(employee.getId())).willReturn(Optional.of(employee));
 
         ResultActions response = mockMvc.perform(get("/api/employee/{id}", 2));
@@ -115,12 +113,12 @@ public class EmployeeControllerTest {
 
     @DisplayName("updateEmployee RestAPI (positive scenario)")
     @Test
-    public void givenUpdatedEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployeeObject () throws Exception {
+    public void givenUpdatedEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployeeObject() throws Exception {
 
         given(employeeService.getEmployeeById(employee.getId())).willReturn(Optional.of(employee));
         employee.setFirstName("Mohammad Javad");
         employee.setEmail("m.javad2007@gmail.com");
-        given(employeeService.updateEmployee(any(Employee.class))).willAnswer(invocation -> invocation.getArgument(0 ));
+        given(employeeService.updateEmployee(any(Employee.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         ResultActions response = mockMvc.perform(put("/api/employee/{id}", employee.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -132,14 +130,15 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.lastName", CoreMatchers.is(employee.getLastName())))
                 .andExpect(jsonPath("$.email", CoreMatchers.is(employee.getEmail())));
     }
+
     @DisplayName("updateEmployee RestAPI (negative scenario)")
     @Test
-    public void givenUpdatedEmployeeObject_whenUpdateEmployee_thenReturnNotFound () throws Exception {
+    public void givenUpdatedEmployeeObject_whenUpdateEmployee_thenReturnNotFound() throws Exception {
 
         given(employeeService.getEmployeeById(employee.getId())).willReturn(Optional.of(employee));
         employee.setFirstName("Mohammad Javad");
         employee.setEmail("m.javad2007@gmail.com");
-        given(employeeService.updateEmployee(any(Employee.class))).willAnswer(invocation -> invocation.getArgument(0 ));
+        given(employeeService.updateEmployee(any(Employee.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         ResultActions response = mockMvc.perform(put("/api/employee/{id}", 2)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -148,9 +147,10 @@ public class EmployeeControllerTest {
         response.andDo(print())
                 .andExpect(status().isNotFound());
     }
+
     @DisplayName("deleteEmployee RestAPI")
     @Test
-    public void givenEmployeeId_whenDeleteEmployee_thenReturnOK () throws Exception {
+    public void givenEmployeeId_whenDeleteEmployee_thenReturnOK() throws Exception {
 
         willDoNothing().given(employeeService).deleteEmployee(employee.getId());
 
